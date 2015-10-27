@@ -1,8 +1,8 @@
 {
-  "name": "site",
+  "name": "thun-dolo",
   "version": "0.0.1",
   "description": "project",
-  "main": "project.js",
+  "main": "dolo.js",
   "scripts": {
     "test": "test"
   },
