@@ -13,6 +13,12 @@ app.engine('handlebars', handlebars.engine);
 app.set('port', process.env.PORT || 1997);
 app.set('view engine', 'handlebars');
 
+//testing middleware
+app.use(function(req, res, next) {
+  res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+  next();
+});
+
 //routes
 app.get('/', function(req, res) {
   res.render('home', {
@@ -21,8 +27,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/dragon', function(req, res) {
-  res.render('dragon');
+  res.render('dragon', {
+    pageTestScript: '/qa/tests-dragon.js'
+  });
 });
+
+
+//static middleware
+app.use(express.static(__dirname + '/public'));
 
 
 //middleware for errors
