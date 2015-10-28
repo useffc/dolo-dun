@@ -5,6 +5,7 @@ var handlebars = require('express-handlebars')
   .create({
     defaultLayout: 'main'
   });
+var quotes = require('./lib/quotes.js');
 
 
 app.engine('handlebars', handlebars.engine);
@@ -14,7 +15,9 @@ app.set('view engine', 'handlebars');
 
 //routes
 app.get('/', function(req, res) {
-  res.render('home');
+  res.render('home', {
+    quote: quotes.randomQuote()
+  });
 });
 
 app.get('/dragon', function(req, res) {
