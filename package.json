@@ -16,5 +16,9 @@
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3"
   }
 }
