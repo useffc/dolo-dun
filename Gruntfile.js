@@ -3,8 +3,7 @@ module.exports = function(grunt) {
     global: {
       root: './',
       dist: 'dist',
-      distAssets: 'dist/assets',
-      src: 'src',
+      assets: 'public/assets',
       img: 'img',
       styles: 'stylesheets',
       js: 'src/js'
@@ -25,13 +24,6 @@ module.exports = function(grunt) {
             cwd: 'src/img',
             src: '**',
             dest: '<%= global.distAssets %>/img'
-          },
-          //jquery
-          {
-            expand: true,
-            flatten: true,
-            src: 'node_modules/jquery/dist/jquery.js',
-            dest: '<%= global.distAssets %>/js'
           },
           //vendor libraries that aren't in node modules
          ]
@@ -61,7 +53,7 @@ module.exports = function(grunt) {
         options: {
           sassDir: '<%= global.styles %>',
           specify: '<%= global.styles %>/main.scss',
-          cssDir: '<%= global.distAssets %>/css',
+          cssDir: '<%= global.assets %>/css',
           environment: 'development',
           noLineComments: true
         }
@@ -72,28 +64,34 @@ module.exports = function(grunt) {
       customCss: {
         files: [
           '<%= global.styles %>/main.scss',
-          '<%= global.styles %>/custom/**/*.scss',
+          '<%= global.styles %>/main/**/*.scss',
         ],
         tasks: ['compass:custom']
-      },
-      markup: {
-        files: '<%= global.templates %>/**/*.hbs',
-        tasks: ['assemble']
       },
       js: {
         files: '<%= global.js %>/**/*.js',
         tasks: ['copy:custom']
       },
+    },
+    nodemon: {
+      dev: {
+        script: 'dolo.js'
+      }
+    },
+    concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
+      tasks: ['nodemon', 'watch']
     }
   });
-  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('assemble');
 
-  grunt.registerTask('default', ['copy', 'concat', 'compass:everything', 'assemble', 'connect', 'watch']);
+  grunt.registerTask('default', ['copy', 'concat', 'compass:custom', 'concurrent']);
 };
