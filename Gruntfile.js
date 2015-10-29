@@ -9,24 +9,6 @@ module.exports = function(grunt) {
       styles: 'stylesheets',
       js: 'src/js'
     },
-    assemble: {
-      options: {
-        layoutdir: 'src/templates/layouts/',
-        layout: 'landing.hbs',
-        assets: 'dist/assets',
-        partials: 'src/templates/partials/**/*.hbs'
-      },
-      target: {
-        files: [
-          {
-            expand: true,
-            cwd: 'src/templates/pages',
-            src: ['**/*.hbs'],
-            dest: '<%= global.dist %>'
-          }
-        ]
-      }
-    },
     copy: {
       dist:{
         files: [
@@ -52,13 +34,6 @@ module.exports = function(grunt) {
             dest: '<%= global.distAssets %>/js'
           },
           //vendor libraries that aren't in node modules
-          {
-            expand: true,
-            flatten: true,
-            cwd: 'src/js/vendor',
-            src: '*.js',
-            dest: '<%= global.distAssets %>/js'
-          }
          ]
        },
        custom: {
@@ -79,53 +54,9 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: ';'
-      },
-      foundation: {
-        src: [
-          '<%= global.js %>/foundation/foundation.js',
-          '<%= global.js %>/foundation/foundation.alerts.js',
-          '<%= global.js %>/foundation/foundation.clearing.js',
-          '<%= global.js %>/foundation/foundation.cookie.js',
-          '<%= global.js %>/foundation/foundation.dropdown.js',
-          '<%= global.js %>/foundation/foundation.forms.js',
-          '<%= global.js %>/foundation/foundation.joyride.js',
-          '<%= global.js %>/foundation/foundation.magellan.js',
-          '<%= global.js %>/foundation/foundation.orbit.js',
-          '<%= global.js %>/foundation/foundation.placeholder.js',
-          '<%= global.js %>/foundation/foundation.reveal.js',
-          '<%= global.js %>/foundation/foundation.section.js',
-          '<%= global.js %>/foundation/foundation.tooltip.js',
-          '<%= global.js %>/foundation/foundation.topbar.js',
-          '<%= global.js %>/foundation/foundation.interchange.js',
-          '<%= global.js %>/foundation/foundation.offcanvas.js'
-        ],
-        dest: '<%= global.distAssets %>/js/foundation.js'
       }
     },
     compass: {
-      everything: {
-        options: {
-          sassDir: '<%= global.styles %>',
-          cssDir: '<%= global.distAssets %>/css',
-          specify: [
-            '<%= global.styles %>/foundation.scss',
-            '<%= global.styles %>/ionicons.scss',
-            '<%= global.styles %>/main.scss',
-            '<%= global.styles %>/normalize.scss',
-          ],
-          environment: 'development',
-          noLineComments: true
-        }
-      },
-      foundation: {
-        options: {
-          sassDir: '<%= global.styles %>',
-          specify: '<%= global.styles %>/foundation.scss',
-          cssDir: '<%= global.distAssets %>/css',
-          environment: 'development',
-          noLineComments: true
-        }
-      },
       custom: {
         options: {
           sassDir: '<%= global.styles %>',
@@ -136,14 +67,8 @@ module.exports = function(grunt) {
         }
       }
     },
+    //watch should watch for changes in scss files or front end js and recompile when that happens
     watch: {
-      foundationCss: {
-        files: [
-          '<%=global.styles %>/foundation.scss',
-          '<%= global.styles %>/foundation/**/*.scss'
-        ],
-        tasks: ['compass:foundation']
-      },
       customCss: {
         files: [
           '<%= global.styles %>/main.scss',
