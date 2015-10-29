@@ -41,7 +41,10 @@ app.use(express.static(__dirname + '/public'));
 //404
 app.use(function(req, res, next) {
   res.status(404);
-  res.render('error');
+  res.render('error', {
+    status: res.status,
+    message: res.message
+  });
 });
 
 //500
