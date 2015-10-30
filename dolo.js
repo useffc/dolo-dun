@@ -19,6 +19,29 @@ app.use(function(req, res, next) {
   next();
 });
 
+//routes
+app.get('/', function(req, res) {
+  res.render('home', {
+    quote: quotes.randomQuote()
+  });
+});
+app.get('/dragon', function(req, res) {
+  res.render('dragon', {
+    pageTestScript: '/qa/tests-dragon.js'
+  });
+});
+app.get('/filth', function(req, res) {
+  res.render('filth', {
+
+  });
+})
+app.get('/smooth', function(req, res) {
+  res.render('smooth', {
+
+  });
+})
+
+
 app.disable('x-powered-by');
 
 //static middleware
@@ -42,9 +65,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+module.exports.app = app;
+
 app.listen(app.get('port'), function() {
   console.log('dolo listening on port ' + app.get('port'));
 });
-
-module.exports.app = app;
-routes = require('./routes');
