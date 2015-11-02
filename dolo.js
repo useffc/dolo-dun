@@ -5,7 +5,6 @@ var handlebars = require('express-handlebars')
   .create({
     defaultLayout: 'main'
   });
-var quotes = require('./lib/quotes.js');
 
 
 app.engine('handlebars', handlebars.engine);
@@ -20,27 +19,7 @@ app.use(function(req, res, next) {
 });
 
 //routes
-app.get('/', function(req, res) {
-  res.render('home', {
-    quote: quotes.randomQuote()
-  });
-});
-app.get('/dragon', function(req, res) {
-  res.render('dragon', {
-    pageTestScript: '/qa/tests-dragon.js'
-  });
-});
-app.get('/filth', function(req, res) {
-  res.render('filth', {
-
-  });
-})
-app.get('/smooth', function(req, res) {
-  res.render('smooth', {
-
-  });
-})
-
+require('./routes.js')(app);
 
 app.disable('x-powered-by');
 
@@ -49,21 +28,26 @@ app.use(express.static(__dirname + '/public'));
 
 
 //middleware for errors
-//404
-app.use(function(req, res, next) {
-  res.status(404);
-  res.render('error', {
-    status: res.status,
-    message: res.message
-  });
-});
-
 //500
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500);
   res.render('error');
 });
+//
+//404
+app.use(function(req, res) {
+  res.status(404);
+  res.render('error', {
+    status: res.status,
+    message: res.locals,
+    hello: 'hello'
+  });
+});
+
+//body parser
+app.use(require('body-parser')());
+
 
 module.exports.app = app;
 

@@ -8,4 +8,4 @@ suite('Cross-page tests', function() {
   });
 
   test('');
-})
+});
