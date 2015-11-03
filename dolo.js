@@ -5,7 +5,7 @@ var handlebars = require('express-handlebars')
   .create({
     defaultLayout: 'main'
   });
-
+var bodyParser = require('body-parser');
 
 app.engine('handlebars', handlebars.engine);
 
@@ -46,7 +46,7 @@ app.use(function(req, res) {
 });
 
 //body parser
-app.use(require('body-parser')());
+app.use(bodyParser.json());
 
 
 module.exports.app = app;
