@@ -6,6 +6,7 @@ var handlebars = require('express-handlebars')
     defaultLayout: 'main'
   });
 var bodyParser = require('body-parser');
+var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
 app.engine('handlebars', handlebars.engine);
 
@@ -19,7 +20,10 @@ app.use(function(req, res, next) {
 });
 
 //routes
-require('./routes.js')(app);
+var routes = require('./routes')(app);
+
+//db stuff
+var data = require('./data')(app);
 
 app.disable('x-powered-by');
 
