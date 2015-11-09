@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 var routes = require('./routes')(app);
 
 //db stuff
-var data = require('./data')(app);
+var data = require('./data');
 
 app.disable('x-powered-by');
 

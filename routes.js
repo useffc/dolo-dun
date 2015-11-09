@@ -1,3 +1,4 @@
+var express = require('express');
 var quotes = require('./lib/quotes.js');
 
 module.exports = function(app) {
@@ -6,6 +7,9 @@ module.exports = function(app) {
     res.render('home', {
       quote: quotes.randomQuote()
     });
+  })
+  .post(function(req, res) {
+    console.log('damn');
   });
   app.route('/dragon')
   .get(function(req, res) {
