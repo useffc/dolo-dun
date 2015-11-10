@@ -8,5 +8,5 @@ module.exports = function(app) {
     style: String,
     color: String
   });
-  var testModel = mongoose.model('testModal', testSchema);
+  var testModel = mongoose.model('testModel', testSchema);
 };

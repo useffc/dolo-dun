@@ -10,6 +10,7 @@ module.exports = function(app) {
   })
   .post(function(req, res) {
     console.log('damn');
+    res.sendStatus(200);
   });
   app.route('/dragon')
   .get(function(req, res) {
