@@ -5,6 +5,7 @@ mongoose.connect('mongodb://localhost/test');
 var testSchema = mongoose.Schema(
   {
     name: String,
+    surname: String,
     style: String,
     color: String
   },

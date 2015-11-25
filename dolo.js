@@ -2,9 +2,10 @@ var express = require('express');
 
 var app = express();
 var bodyParser = require('body-parser');
-var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');

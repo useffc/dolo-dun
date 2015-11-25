@@ -19,5 +19,24 @@ module.exports = function(app) {
       }
       res.json(data);
     });
+  })
+  .post(function(req, res) {
+    var item = new model();
+    item.name = req.body.name;
+    item.surname = req.body.surname;
+    item.style = req.body.style;
+    item.color = req.body.color;
+    console.log(req);
+
+    item.save(function(err) {
+      if(err) {
+        res.send(err);
+      }
+
+      res.json({
+        message: 'new item created',
+        data: item
+      });
+    });
   });
 };
