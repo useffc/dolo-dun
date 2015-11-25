@@ -1,17 +1,17 @@
 var express = require('express');
 
 var app = express();
-var handlebars = require('express-handlebars')
-  .create({
-    defaultLayout: 'main'
-  });
 var bodyParser = require('body-parser');
-var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
-app.engine('handlebars', handlebars.engine);
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
 
 app.set('port', process.env.PORT || 1997);
-app.set('view engine', 'handlebars');
 
 //testing middleware
 app.use(function(req, res, next) {
@@ -21,9 +21,6 @@ app.use(function(req, res, next) {
 
 //routes
 var routes = require('./routes')(app);
-
-//db stuff
-var data = require('./data');
 
 app.disable('x-powered-by');
 
@@ -36,22 +33,23 @@ app.use(express.static(__dirname + '/public'));
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500);
-  res.render('error');
+  res.render('error', {
+    status: res.statusCode
+  });
 });
 
 //404
 app.use(function(req, res) {
   res.status(404);
   res.render('error', {
-    status: res.status,
-    message: res.locals,
+    status: res.statusCode,
     hello: 'hello'
   });
 });
 
-//body parser
-app.use(bodyParser.json());
-
+app.use('/data', function(req, res, next) {
+  next();
+});
 
 module.exports.app = app;
 

@@ -2,50 +2,35 @@ module.exports = function(grunt) {
   grunt.initConfig({
     global: {
       root: './',
-      dist: 'dist',
-      assets: 'public/assets',
       img: 'img',
       styles: 'stylesheets',
-      js: 'src/js'
+      app: 'app/',
+      assets: 'public/assets',
+      modules: 'node_modules'
     },
     copy: {
-      dist:{
-        files: [
-          // ion icons
-          {
-            expand: true,
-            cwd: '<%= global.fonts %>/ionicons',
-            src: '**',
-            dest: '<%= global.distAssets %>/fonts'
-          },
-          //images
-          {
-            expand: true,
-            cwd: 'src/img',
-            src: '**',
-            dest: '<%= global.distAssets %>/img'
-          },
-          //vendor libraries that aren't in node modules
-         ]
-       },
-       custom: {
-        files: [
-          //other libraries/js written by me
-          {
-            expand: true,
-            flatten: true,
-            cwd: '<%= global.js %>',
-            src: [
-              'main.js'
-            ],
-            dest: '<%= global.distAssets %>/js'
-          }
-        ]
+      vendor : {
+        expand: true,
+        flatten: true,
+        src: [
+          '<%= global.modules %>/angular/angular.js',
+          '<%= global.modules %>/angular-animate/angular-animate.js'
+        ],
+        dest: '<%= global.assets %>/js/vendor/'
        }
     },
     concat: {
       options: {
         separator: ';'
+      },
+      angularApp: {
+        src: [
+          '<%= global.app %>/app.js',
+          '<%= global.app %>/controllers/MainController.js',
+          '<%= global.app %>/directives/directive.js',
+          '<%= global.app %>/services/MainService.js',
+        ],
+        dest: '<%= global.assets %>/js/app.js'
       }
     },
     compass: {
@@ -69,8 +54,8 @@ module.exports = function(grunt) {
         tasks: ['compass:custom']
       },
       js: {
-        files: '<%= global.js %>/**/*.js',
-        tasks: ['copy:custom']
+        files: '<%= global.app %>/**/*.js',
+        tasks: ['concat:angularApp']
       },
     },
     nodemon: {

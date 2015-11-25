@@ -1,12 +1,18 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-module.exports = function(app) {
-  mongoose.connect('mongodb://localhost/test');
-  var testSchema = mongoose.Schema({
+mongoose.connect('mongodb://localhost/test');
+var testSchema = mongoose.Schema(
+  {
     name: String,
+    surname: String,
     style: String,
     color: String
-  });
-  var testModel = mongoose.model('testModel', testSchema);
-};
+  },
+  {
+    collection: 'test'
+  }
+);
+var testModel = mongoose.model('testModel', testSchema);
+
+module.exports = testModel;

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body ng-app="dolo">
+    <h3>Dolo</h3>
+    <div ng-controller="MainController">
+      <ul>
+        <li ng-repeat="item in data">
+          {{item.name}} {{item.surname}} {{item.style}} {{item.color}}
+        </li>
+      </ul>
+    </div>
+    <script src="assets/js/vendor/angular.js"></script>
+    <script src="assets/js/vendor/angular-animate.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+
+
+</html>

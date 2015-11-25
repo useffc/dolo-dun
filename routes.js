@@ -1,46 +1,42 @@
 var express = require('express');
 var quotes = require('./lib/quotes.js');
+var model = require('./data');
 
 module.exports = function(app) {
   app.route('/')
   .get(function(req, res) {
-    res.render('home', {
-      quote: quotes.randomQuote()
-    });
+    res.sendFile(__dirname + '/public/index.html');
   })
   .post(function(req, res) {
     console.log('damn');
     res.sendStatus(200);
   });
-  app.route('/dragon')
+  app.route('/data')
   .get(function(req, res) {
-    res.render('dragon', {
-      pageTestScript: '/qa/tests-dragon.js'
+    model.find(function(err, data) {
+      if(err) {
+        res.send(err);
+      }
+      res.json(data);
     });
-  });
-  app.route('/filth')
-  .get(function(req, res) {
-    res.render('filth', {
+  })
+  .post(function(req, res) {
+    var item = new model();
+    item.name = req.body.name;
+    item.surname = req.body.surname;
+    item.style = req.body.style;
+    item.color = req.body.color;
+    console.log(req);
 
-    });
-  });
-  app.route('/smooth')
-  .get(function(req, res) {
-    res.render('smooth', {
+    item.save(function(err) {
+      if(err) {
+        res.send(err);
+      }
 
+      res.json({
+        message: 'new item created',
+        data: item
+      });
     });
-  });
-  app.route('/form')
-  .get(function(req, res) {
-    res.render('form', {
-
-    });
-  });
-  app.route('/headers')
-  .get(function(req, res) {
-    res.set('Content-Type', 'text/plain');
-    var s = '';
-    for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
-      res.send(s);
   });
 };
