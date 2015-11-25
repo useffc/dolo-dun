@@ -43,4 +43,9 @@ module.exports = function(app) {
     for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
       res.send(s);
   });
+  app.route('/app')
+  .get(function(req, res) {
+    res.render('', {
+    });
+  });
 };
