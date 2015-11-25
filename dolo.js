@@ -6,6 +6,7 @@ var handlebars = require('express-handlebars')
     defaultLayout: 'main'
   });
 var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
 app.engine('handlebars', handlebars.engine);
@@ -22,9 +23,6 @@ app.use(function(req, res, next) {
 //routes
 var routes = require('./routes')(app);
 
-//db stuff
-var data = require('./data');
-
 app.disable('x-powered-by');
 
 //static middleware
@@ -36,22 +34,23 @@ app.use(express.static(__dirname + '/public'));
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500);
-  res.render('error');
+  res.render('error', {
+    status: res.statusCode
+  });
 });
 
 //404
 app.use(function(req, res) {
   res.status(404);
   res.render('error', {
-    status: res.status,
-    message: res.locals,
+    status: res.statusCode,
     hello: 'hello'
   });
 });
 
-//body parser
-app.use(bodyParser.json());
-
+app.use('/data', function(req, res, next) {
+  next();
+});
 
 module.exports.app = app;
 

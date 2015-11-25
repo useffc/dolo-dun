@@ -1,5 +1,6 @@
 var express = require('express');
 var quotes = require('./lib/quotes.js');
+var model = require('./data');
 
 module.exports = function(app) {
   app.route('/')
@@ -18,22 +19,14 @@ module.exports = function(app) {
       pageTestScript: '/qa/tests-dragon.js'
     });
   });
-  app.route('/filth')
+  app.route('/data')
   .get(function(req, res) {
-    res.render('filth', {
-
-    });
-  });
-  app.route('/smooth')
-  .get(function(req, res) {
-    res.render('smooth', {
-
-    });
-  });
-  app.route('/form')
-  .get(function(req, res) {
-    res.render('form', {
-
+    model.find(function(err, data) {
+      console.log(data);
+      if(err) {
+        res.send(err);
+      }
+      res.json(data);
     });
   });
   app.route('/headers')
