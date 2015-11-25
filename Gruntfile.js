@@ -5,10 +5,18 @@ module.exports = function(grunt) {
       img: 'img',
       styles: 'stylesheets',
       app: 'app/',
-      assets: 'public/assets'
+      assets: 'public/assets',
+      modules: 'node_modules'
     },
     copy: {
-       custom: {
+      vendor : {
+        expand: true,
+        flatten: true,
+        src: [
+          '<%= global.modules %>/angular/angular.js',
+          '<%= global.modules %>/angular-animate/angular-animate.js'
+        ],
+        dest: '<%= global.assets %>/js/vendor/'
        }
     },
     concat: {
@@ -47,7 +55,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: '<%= global.app %>/**/*.js',
-        tasks: ['copy:custom']
+        tasks: ['concat:angularApp']
       },
     },
     nodemon: {

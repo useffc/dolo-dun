@@ -1,18 +1,16 @@
 var express = require('express');
 
 var app = express();
-var handlebars = require('express-handlebars')
-  .create({
-    defaultLayout: 'main'
-  });
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
-app.engine('handlebars', handlebars.engine);
+app.use(bodyParser.json());
+
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
 
 app.set('port', process.env.PORT || 1997);
-app.set('view engine', 'handlebars');
 
 //testing middleware
 app.use(function(req, res, next) {
