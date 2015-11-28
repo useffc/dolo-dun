@@ -39,4 +39,45 @@ module.exports = function(app) {
       });
     });
   });
+  //individual
+  app.route('/data/:item_id')
+    .get(function(req, res) {
+      model.findById(req.params.item_id, function(err, item) {
+        if(err) {
+          res.send(err);
+        }
+        res.json(item);
+      });
+    })
+    .put(function(req, res) {
+      model.findById(req.params.item_id, function(err,item) {
+        if(err) {
+          res.send(err);
+        }
+        item.name = req.body.name;
+        item.surname = req.body.surname;
+        item.style = req.body.style;
+        item.color = req.body.color;
+        item.save(function(err) {
+          if(err) {
+            res.send(err);
+          }
+          res.json({
+            message: 'item updated',
+            data: item
+          });
+        });
+      });
+    })
+    .delete(function(req, res) {
+      model.findByIdAndRemove(req.params.item_id, function(err, item) {
+        if(err) {
+          res.send(err);
+        }
+        res.json({
+          message: 'item deleted',
+          item: item
+        });
+      });
+    });
 };
