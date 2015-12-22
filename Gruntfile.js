@@ -17,15 +17,7 @@ module.exports = function(grunt) {
           '<%= global.modules %>/angular-animate/angular-animate.js'
         ],
         dest: '<%= global.assets %>/js/vendor/'
-       },
-      general: {
-	expand: true,
-	flatten: true,
-	src: [
-          '<%= global.app %>/main.js',
-	],
-	dest: '<%= global.assets %>/js/'
-      }
+       }
     },
     concat: {
       options: {
@@ -39,6 +31,13 @@ module.exports = function(grunt) {
           '<%= global.app %>/services/MainService.js',
         ],
         dest: '<%= global.assets %>/js/app.js'
+      },
+      general: {
+        src: [
+          '<%= global.app %>/main.js',
+          '<%= global.modules %>/snapsvg/dist/snap.svg.js'
+        ],
+        dest: '<%= global.assets %>/js/main.js'
       }
     },
     compass: {
@@ -67,7 +66,7 @@ module.exports = function(grunt) {
       },
       static: {
         files: '<%= global.app %>/main.js',
-	tasks: ['copy:general']
+        tasks: ['copy:general']
       }
     },
     nodemon: {
