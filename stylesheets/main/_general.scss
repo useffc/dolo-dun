@@ -1,0 +1,36 @@
+* {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-flex;
+  display: flex;
+  background-color: #B3B3A8;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.center {
+  margin: auto;
+  color: #f2512e;
+  transition: all 0.5s;
+  text-shadow: 0 0 2px rgba(0,0,0,0.1);
+  cursor: default;
+  h3 {
+    margin: 0;
+    font-size: 28px;
+  }
+  &:hover {
+    transform: translateY(-12px);
+  }
+  .creds {
+    margin: auto;
+    font-size: 14px;
+  }
+}
